@@ -308,7 +308,7 @@ f = true; // устанавливаем флаг на случай, если sig
 pthread_cond_signal(&c);
 
 // вторая нить
-if (!f) pthread_cond_wait(&c); // Некорректная программа!
+if (f) pthread_cond_wait(&c); // Некорректная программа!
 ```
 
 Однако в этом примере по-прежнему есть race condition, а именно, если во второй нити будет выполнена проверка `!f`,
@@ -331,7 +331,7 @@ pthread_mutex_unlock(&m);
 
 // вторая нить
 pthread_mutex_lock(&m);
-if (!f) pthread_cond_wait(&c, &m);
+if (f) pthread_cond_wait(&c, &m);
 pthread_mutex_unlock(&m);
 ```
 
